@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Search, Clock, XCircle, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CheckStatus = () => {
   const [phone, setPhone] = useState('');
@@ -16,7 +17,7 @@ const CheckStatus = () => {
     setResult(null);
 
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/visits/status/${phone}`);
+      const { data } = await axios.get(`${API_URL}/api/visits/status/${phone}`);
       setResult(data);
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong!");

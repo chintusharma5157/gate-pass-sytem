@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Users, Shield, Trash2, Edit, X, Save, ShieldAlert, Clock, AlertOctagon } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AdminDashboard = () => {
   const [usersList, setUsersList] = useState([]);
@@ -27,7 +28,7 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('http://localhost:5000/api/auth/users');
+      const { data } = await axios.get('${API_URL}/api/auth/users');
       setUsersList(data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -39,7 +40,7 @@ const AdminDashboard = () => {
   const handleDelete = async (id, name) => {
     if (window.confirm(`Are you sure you want to delete ${name}? This action cannot be undone.`)) {
       try {
-        await axios.delete(`http://localhost:5000/api/auth/users/${id}`);
+        await axios.delete(`${API_URL}/api/auth/users/${id}`);
         setUsersList(usersList.filter(u => u._id !== id));
       } catch (error) {
         alert("Failed to delete user");
@@ -55,7 +56,7 @@ const AdminDashboard = () => {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`http://localhost:5000/api/auth/users/${editingUser._id}`, editForm);
+      const { data } = await axios.put(`${API_URL}/api/auth/users/${editingUser._id}`, editForm);
       setUsersList(usersList.map(u => (u._id === editingUser._id ? data.user : u)));
       setEditingUser(null);
     } catch (error) {
@@ -73,7 +74,7 @@ const AdminDashboard = () => {
       if (confirm2 === 'RESET') {
         try {
           setLoading(true);
-          await axios.post('http://localhost:5000/api/auth/reset-database');
+          await axios.post(`${API_URL}/api/auth/reset-database`);
           alert("✅ System data has been successfully wiped clean!");
           fetchUsers(); // Refresh UI after wipe
         } catch (error) {

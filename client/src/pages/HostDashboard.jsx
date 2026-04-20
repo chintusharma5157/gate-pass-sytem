@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle, Clock, CalendarDays, Phone, Fingerprint } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const HostDashboard = () => {
   const [visits, setVisits] = useState([]);
@@ -21,7 +22,7 @@ const HostDashboard = () => {
 
   const fetchVisits = async () => {
     try {
-      const { data } = await axios.get(`http://localhost:5000/api/visits/host/${user._id}`);
+      const { data } = await axios.get(`${API_URL}/api/visits/host/${user._id}`);
       setVisits(data);
     } catch (error) {
       console.error("Error fetching visits:", error);
@@ -32,7 +33,7 @@ const HostDashboard = () => {
 
   const handleApprove = async (visitId) => {
     try {
-      await axios.put(`http://localhost:5000/api/visits/approve/${visitId}`);
+      await axios.put(`${API_URL}/api/visits/approve/${visitId}`);
       alert("Visit Approved! QR Code Generated.");
       fetchVisits(); // List ko refresh karo
     } catch (error) {

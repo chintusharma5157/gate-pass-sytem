@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode'; // 🔥 THE ULTIMATE SCANNER LIBRARY
 import { ShieldCheck, UserCheck, XCircle, ScanLine, UserPlus, Send, Clock } from 'lucide-react';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const GuardDashboard = () => {
   const [scanResult, setScanResult] = useState(null);
@@ -30,7 +31,7 @@ const GuardDashboard = () => {
     }
     const fetchHosts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/auth/hosts');
+        const { data } = await axios.get(`${API_URL}/api/auth/hosts`);
         setHosts(data);
       } catch (err) {
         console.error("Error fetching hosts:", err);
@@ -87,7 +88,7 @@ const GuardDashboard = () => {
 
     try {
       console.log("🚀 2. Backend ko Request bhej rahe hain...");
-      const { data } = await axios.post('http://localhost:5000/api/visits/scan', {
+      const { data } = await axios.post(`${API_URL}/api/visits/scan`, {
         scannedData: text
       });
 
@@ -125,7 +126,7 @@ const GuardDashboard = () => {
     setManualStatus('');
 
     try {
-      await axios.post('http://localhost:5000/api/visitors/request-pass', {
+      await axios.post(`${API_URL}/api/visitors/request-pass`, {
         ...manualForm,
         photoUrl: 'https://cdn-icons-png.flaticon.com/512/149/149071.png' 
       });

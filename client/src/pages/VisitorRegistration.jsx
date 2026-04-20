@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import Webcam from 'react-webcam';
 import { Camera, RefreshCw, Send, CheckCircle, ShieldCheck } from 'lucide-react';
 import axios from 'axios';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const VisitorRegistration = () => {
   const webcamRef = useRef(null);
@@ -17,7 +18,7 @@ const VisitorRegistration = () => {
   useEffect(() => {
     const fetchHosts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:5000/api/auth/hosts');
+        const { data } = await axios.get(`${API_URL}/api/auth/hosts`);
         setHosts(data);
       } catch (error) {
         console.error("Error fetching hosts:", error);
@@ -37,7 +38,7 @@ const VisitorRegistration = () => {
     
     setIsSubmitting(true);
     try {
-      await axios.post('http://localhost:5000/api/visitors/request-pass', {
+      await axios.post(`${API_URL}/api/visitors/request-pass`, {
         ...formData,
         photoUrl: photo 
       });
