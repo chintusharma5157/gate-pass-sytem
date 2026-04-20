@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Users, Shield, Trash2, Edit, X, Save, ShieldAlert, Clock, AlertOctagon } from 'lucide-react';
-const API_URL = import.meta.env.VITE_API_URL;
+
+// Fallback add kiya hai taki local pe bhi chale
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const AdminDashboard = () => {
   const [usersList, setUsersList] = useState([]);
@@ -14,7 +16,6 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
-  // FIX: Infinite Loop Fix. Data sirf component mount par ek baar read hoga.
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('user'));
     
@@ -23,12 +24,13 @@ const AdminDashboard = () => {
       return;
     }
     fetchUsers();
-  }, [navigate]); // <- Yahan se currentUser hata diya, ab loop nahi banega!
+  }, [navigate]); 
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get('${API_URL}/api/auth/users');
+      // 🔥 YAHAN FIX KIYA HAI: Single quotes hatakar backticks (``) lagaye hain
+      const { data } = await axios.get(`${API_URL}/api/auth/users`);
       setUsersList(data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -64,7 +66,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // --- 🔥 NAYA RESET SYSTEM FEATURE 🔥 ---
   const handleSystemReset = async () => {
     const confirm1 = window.confirm("🚨 DANGER ZONE: Are you sure you want to WIPE ALL DATA (Visits, Visitors, and Staff)? Admin accounts will remain safe.");
     
@@ -76,7 +77,7 @@ const AdminDashboard = () => {
           setLoading(true);
           await axios.post(`${API_URL}/api/auth/reset-database`);
           alert("✅ System data has been successfully wiped clean!");
-          fetchUsers(); // Refresh UI after wipe
+          fetchUsers(); 
         } catch (error) {
           alert("❌ Reset failed. Check backend console.");
         } finally {
@@ -120,7 +121,6 @@ const AdminDashboard = () => {
               <p className="text-xl font-black text-orange-400">{totalGuards}</p>
             </div>
 
-            {/* NAYA WIPE DATABASE BUTTON */}
             <button 
               onClick={handleSystemReset}
               title="Wipe all data from Database"
@@ -133,10 +133,8 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Main Content Area */}
       <div className="max-w-7xl mx-auto bg-slate-800 rounded-3xl shadow-2xl border border-slate-700 overflow-hidden relative z-10">
         
-        {/* Tabs */}
         <div className="flex border-b border-slate-700 bg-slate-900/50">
           <button 
             onClick={() => setActiveTab('host')}
@@ -152,7 +150,6 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        {/* Data Table */}
         <div className="p-6 overflow-x-auto">
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -202,7 +199,6 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* EDIT MODAL */}
       {editingUser && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50 p-4 animate-[fadeIn_0.2s_ease-out]">
           <div className="bg-slate-800 border border-slate-700 p-8 rounded-2xl shadow-2xl w-full max-w-md relative">
