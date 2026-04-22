@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Mail, Lock, User, Phone, Briefcase, LogIn, UserPlus } from 'lucide-react';
 
-// Naya Dynamic URL yahan se aayega
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const StaffAuth = () => {
@@ -27,14 +27,11 @@ const StaffAuth = () => {
 
     try {
       const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      // Yahan par humne localhost hata kar API_URL laga diya
       const { data } = await axios.post(`${API_URL}${endpoint}`, formData);
       
-      // Token aur user data local storage me save karo
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data));
 
-      // Role ke hisaab se dashboard par bhej do
       if (data.role === 'host') navigate('/host-dashboard');
       else if (data.role === 'guard') navigate('/guard-dashboard');
       else navigate('/admin-dashboard');
