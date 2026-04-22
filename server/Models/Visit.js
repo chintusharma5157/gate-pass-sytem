@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const visitSchema = new mongoose.Schema({
     visitorId: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'Visitor', // Visitor model se link kar rahe hain
+        ref: 'Visitor', 
         required: true 
     },
     hostId: { 
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'User', // User (Host) model se link kar rahe hain
+        ref: 'User', 
         required: true 
     },
     purpose: { type: String, required: true },
@@ -17,9 +17,9 @@ const visitSchema = new mongoose.Schema({
         enum: ['Pending', 'Approved', 'Rejected'], 
         default: 'Pending' 
     },
-    qrCodeData: { type: String }, // Approval ke baad jo unique string banegi
-    entryTime: { type: Date }, // Jab guard andar aane dega
-    exitTime: { type: Date },  // Jab visitor bahar jayega
+    qrCodeData: { type: String }, 
+    entryTime: { type: Date }, 
+    exitTime: { type: Date },  
     validTill: { type: Date }  // Pass kab tak valid hai
 }, { timestamps: true });
 
