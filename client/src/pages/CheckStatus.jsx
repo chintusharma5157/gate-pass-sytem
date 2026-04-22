@@ -3,7 +3,6 @@ import axios from 'axios';
 import { Search, Clock, XCircle, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// 🔥 Safety ke liye fallback URL add kiya
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const CheckStatus = () => {
@@ -19,7 +18,6 @@ const CheckStatus = () => {
     setResult(null);
 
     try {
-      // Yahan tumhara code ekdum sahi tha!
       const { data } = await axios.get(`${API_URL}/api/visits/status/${phone}`);
       setResult(data);
     } catch (err) {
