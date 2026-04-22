@@ -10,7 +10,6 @@ const HostDashboard = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Local storage se logged-in host ka data nikalna
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const HostDashboard = () => {
     try {
       await axios.put(`${API_URL}/api/visits/approve/${visitId}`);
       alert("Visit Approved! QR Code Generated.");
-      fetchVisits(); // List ko refresh karo
+      fetchVisits(); 
     } catch (error) {
       alert(error.response?.data?.message || "Error approving visit");
     }
@@ -51,10 +50,8 @@ const HostDashboard = () => {
   );
 
   return (
-    // Yaha par explicitly bg-slate-900 aur text-white add kiya gaya hai
     <div className="min-h-[calc(100vh-64px)] bg-slate-900 text-white p-4 md:p-8 relative overflow-hidden">
       
-      {/* Subtle Background Glow (blur-3xl for better cross-browser rendering) */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 blur-3xl rounded-full pointer-events-none"></div>
 
       {/* Header Section */}
