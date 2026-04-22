@@ -15,10 +15,10 @@ function App() {
         <Navbar />
         <div className="flex-1">
           <Routes>
-            {/* Landing Page ab main screen hai */}
+           
             <Route path="/" element={<LandingPage />} />
             
-            {/* Visitor Form ka naya raasta */}
+          
             <Route path="/register-visitor" element={<VisitorRegistration />} />
             
             <Route path="/status" element={<CheckStatus />} />
@@ -26,7 +26,7 @@ function App() {
             <Route path="/host-dashboard" element={<HostDashboard />} /> 
             <Route path="/guard-dashboard" element={<GuardDashboard />} /> 
             
-            {/* 🔥 COMING SOON HATA KAR ASLI ADMIN DASHBOARD LAGA DIYA */}
+            
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
         </div>
