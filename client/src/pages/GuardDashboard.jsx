@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { Html5QrcodeScanner } from 'html5-qrcode'; // 🔥 THE ULTIMATE SCANNER LIBRARY
 import { ShieldCheck, UserCheck, XCircle, ScanLine, UserPlus, Send, Clock } from 'lucide-react';
 
-// 🔥 Fallback URL add kar diya hai
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const GuardDashboard = () => {
@@ -24,7 +23,6 @@ const GuardDashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
   
-  // Ek scan complete hone tak doosre scan ko rokne ke liye
   const isProcessingRef = useRef(false); 
 
   useEffect(() => {
@@ -42,7 +40,6 @@ const GuardDashboard = () => {
     fetchHosts();
   }, [navigate, user]);
 
-  // --- 🔥 HTML5-QRCODE SCANNER LOGIC 🔥 ---
   useEffect(() => {
     if (mode === 'scan') {
       // Initialize the scanner
@@ -59,7 +56,7 @@ const GuardDashboard = () => {
       scanner.render(
         (decodedText) => {
           // Success Callback
-          if (isProcessingRef.current) return; // Agar ek scan chal raha hai, toh ignore karo
+          if (isProcessingRef.current) return; 
           isProcessingRef.current = true;
           
           // Mast si Beep bajao!
@@ -68,7 +65,7 @@ const GuardDashboard = () => {
           handleScanLogic(decodedText);
         },
         (errorMessage) => {
-          // Camera scan karte waqt background errors yahan aate hain, inko ignore karna hota hai
+
         }
       );
 
@@ -86,7 +83,7 @@ const GuardDashboard = () => {
     setError('');
     setSuccess('');
     setVisitorDetails(null);
-    setScanResult(text); // UI switch karne ke liye
+    setScanResult(text); 
 
     try {
       console.log("🚀 2. Backend ko Request bhej rahe hain...");
@@ -99,11 +96,11 @@ const GuardDashboard = () => {
       setSuccess("Pass Verified! You may enter.");
       setVisitorDetails(data.visitorDetails);
 
-      // 5 sec baad screen normal hogi
+      
       setTimeout(() => {
         setSuccess('');
         setScanResult(null); 
-        isProcessingRef.current = false; // Agle scan ke liye ready!
+        isProcessingRef.current = false; 
       }, 5000);
 
     } catch (err) {
@@ -111,11 +108,11 @@ const GuardDashboard = () => {
       const backendMsg = err.response?.data?.message || 'Invalid QR Code or Request Failed.';
       setError(`Access Denied: ${backendMsg}`);
       
-      // 4 sec baad screen normal hogi
+      
       setTimeout(() => {
         setError('');
         setScanResult(null); 
-        isProcessingRef.current = false; // Agle scan ke liye ready!
+        isProcessingRef.current = false; 
       }, 4000);
     } finally {
       setLoading(false);
