@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Users, Shield, Trash2, Edit, X, Save, ShieldAlert, Clock, AlertOctagon } from 'lucide-react';
 
-// Fallback add kiya hai taki local pe bhi chale
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const AdminDashboard = () => {
@@ -29,7 +29,6 @@ const AdminDashboard = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      // 🔥 YAHAN FIX KIYA HAI: Single quotes hatakar backticks (``) lagaye hain
       const { data } = await axios.get(`${API_URL}/api/auth/users`);
       setUsersList(data);
     } catch (error) {
