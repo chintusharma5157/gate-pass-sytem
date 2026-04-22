@@ -3,7 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, XCircle, Clock, CalendarDays, Phone, Fingerprint } from 'lucide-react';
 
-// 🔥 Bas yahan ek fallback URL lagaya hai safety ke liye
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const HostDashboard = () => {
