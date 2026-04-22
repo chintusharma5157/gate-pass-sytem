@@ -3,7 +3,6 @@ import Webcam from 'react-webcam';
 import { Camera, RefreshCw, Send, CheckCircle, ShieldCheck } from 'lucide-react';
 import axios from 'axios';
 
-// 🔥 Fallback URL add kar diya hai
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 const VisitorRegistration = () => {
