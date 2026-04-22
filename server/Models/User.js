@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
     phone: { type: String, required: true }
 }, { timestamps: true });
 
-// Password ko encrypt karne ka logic (Save hone se pehle)
 userSchema.pre('save', async function(next) {
     if (!this.isModified('password')) {
         next();
